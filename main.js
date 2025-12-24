@@ -66,6 +66,9 @@ let BOSS_CONFIG = null;
 let COIN_CONFIG = null;
 let coinAnimTime = 0; // For coin animation
 
+// Trap/Spike config - will be set after loading
+let TRAP_CONFIG = null;
+
 
 // Campaign levels - REDUCED TO 3
 const LEVEL_FILES = ["level1.json", "level2.json", "level3.json"];
@@ -457,9 +460,22 @@ async function loadOtherAssets() {
   const cRes = await loadAsset(ASSETS.checkpoint.png, null);
   checkpointImg = cRes.img;
 
-  // Trap/Spike
-  const tRes = await loadAsset(ASSETS.trap.png, null);
-  trapImg = tRes.img;
+  // Trap/Spike - Load with JSON config
+  try {
+    const [tImgRes, tCfgRes] = await Promise.all([
+      loadAsset(ASSETS.trap.png, null),
+      fetch(ASSETS.trap.json, { cache: "no-store" })
+    ]);
+    if (tImgRes.img) {
+      trapImg = tImgRes.img;
+    }
+    if (tCfgRes.ok) {
+      TRAP_CONFIG = await tCfgRes.json();
+      console.log("[TRAP] Loaded with JSON config!");
+    }
+  } catch (e) {
+    console.warn("[TRAP] Failed to load config:", e);
+  }
 
   // Boss - Load with JSON config
   try {
@@ -2079,25 +2095,47 @@ function updateTraps(dt) {
 
 function drawTraps() {
   if (!trapImg) return;
-  // Assume generic spike sprite or 4 frames
-  // Assuming 4 frames horizontal: Idle, Warn, Extend, Retract
-  const fw = trapImg.width / 4;
-  const fh = trapImg.height;
+
+  ctx.save();
+  ctx.imageSmoothingEnabled = false;
 
   for (const t of traps) {
-    let fIdx = 0;
-    if (t.state === "idle") fIdx = 0;
-    else if (t.state === "warn") fIdx = 1;
-    else if (t.state === "extend") fIdx = 2;
-    else if (t.state === "retract") fIdx = 3;
-
-    // Warn blink
-    if (t.state === "warn" && Math.floor(t.timer * 10) % 2 === 0) {
-      // blink effect
+    // Get animation frames from TRAP_CONFIG if available
+    let frame = null;
+    if (TRAP_CONFIG && TRAP_CONFIG.animations) {
+      const anim = TRAP_CONFIG.animations[t.state];
+      if (anim && anim.length > 0) {
+        const fps = TRAP_CONFIG.meta?.fps || 10;
+        const frameIdx = Math.floor(t.timer * fps) % anim.length;
+        frame = anim[frameIdx];
+      }
     }
 
-    ctx.drawImage(trapImg, fIdx * fw, 0, fw, fh, t.x - fw / 2 - cam.x, t.y - fh - cam.y, fw, fh);
+    if (frame) {
+      // Use JSON config frame
+      const scale = 0.5; // Scale down vì sprite lớn
+      const w = frame.w * scale;
+      const h = frame.h * scale;
+      ctx.drawImage(
+        trapImg,
+        frame.x, frame.y, frame.w, frame.h,
+        t.x - w / 2 - cam.x, t.y - h - cam.y, w, h
+      );
+    } else {
+      // Fallback: assume 4 frames horizontal
+      const fw = trapImg.width / 4;
+      const fh = trapImg.height;
+      let fIdx = 0;
+      if (t.state === "idle") fIdx = 0;
+      else if (t.state === "warn") fIdx = 1;
+      else if (t.state === "extend") fIdx = 2;
+      else if (t.state === "retract") fIdx = 3;
+
+      ctx.drawImage(trapImg, fIdx * fw, 0, fw, fh, t.x - fw / 2 - cam.x, t.y - fh - cam.y, fw, fh);
+    }
   }
+
+  ctx.restore();
 }
 
 function drawEnding() {

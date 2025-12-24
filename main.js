@@ -898,22 +898,11 @@ function moveAndCollideEnemy(e, dt) {
   const GRAV = 1900;
   e.vy += GRAV * dt;
 
-  // X move (patrol)
-  let nx = e.x + e.vx * dt * e.facing;
-  let ny = e.y;
+  // X move (patrol) - chỉ dựa vào patrol bounds, không check wall
+  e.x += e.vx * dt * e.facing;
 
-  // Try X collision against walls
-  const left = nx - e.w / 2;
-  const top = ny - e.h;
-  if (rectVsMap(left, top, e.w, e.h)) {
-    // reverse on wall
-    e.facing *= -1;
-    nx = e.x;
-  }
-  e.x = nx;
-
-  // Y move
-  ny = e.y + e.vy * dt;
+  // Y move (gravity + ground collision)
+  let ny = e.y + e.vy * dt;
   const l = e.x - e.w / 2;
   const t = ny - e.h;
   if (rectVsMap(l, t, e.w, e.h)) {
@@ -933,7 +922,7 @@ function moveAndCollideEnemy(e, dt) {
   // Smooth stairs slope for enemies too
   applyStairsSlope(e);
 
-  // Patrol bounds (primary logic)
+  // Patrol bounds - đổi hướng khi chạm biên
   if (e.x < e.minX) { e.x = e.minX; e.facing = 1; }
   if (e.x > e.maxX) { e.x = e.maxX; e.facing = -1; }
 }

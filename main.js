@@ -1064,9 +1064,9 @@ function drawMap() {
     ctx.save();
     ctx.imageSmoothingEnabled = false;
 
-    // Ground area: y = 16 * TILE to mapH * TILE (4 tiles tall)
-    const groundY = 16 * TILE;
-    const groundH = 4 * TILE; // 128 pixels
+    // Ground area: bắt đầu ngay dưới chân nhân vật (y = 15 tiles)
+    const groundY = 15 * TILE;  // Nâng lên 1 tile để khớp với chân character
+    const groundH = 5 * TILE;   // 160 pixels - cao hơn để phủ đến đáy màn hình
     const groundW = mapW * TILE; // Full map width
 
     // Draw ground image stretched to fit ground area

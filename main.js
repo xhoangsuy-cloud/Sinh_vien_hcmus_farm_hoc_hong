@@ -1084,7 +1084,7 @@ function drawMap() {
     ctx.imageSmoothingEnabled = false;
 
     // Ground area: bắt đầu ngay dưới chân nhân vật
-    const groundY = 15.5 * TILE;  // Điều chỉnh vị trí ground
+    const groundY = 15 * TILE;    // Nâng lên như cũ
     const groundH = 5 * TILE;     // cao để phủ đến đáy màn hình
     const groundW = mapW * TILE; // Full map width
 
@@ -2401,7 +2401,7 @@ async function initEnemy() {
     enemySheet = await loadSpriteByPath("./assets/enemies/vitichphan_monster.png", "./assets/enemies/vitichphan_monster.sprite.json");
     const e = {
       x: 760,
-      y: 16 * TILE + 16,   // Hạ xuống để chân chạm đất
+      y: 16 * TILE - 1,   // Chân trên mặt đất (collision y=16)
       vx: 90,
       vy: 0,
       w: 26,

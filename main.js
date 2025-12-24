@@ -2401,7 +2401,7 @@ async function initEnemy() {
     enemySheet = await loadSpriteByPath("./assets/enemies/vitichphan_monster.png", "./assets/enemies/vitichphan_monster.sprite.json");
     const e = {
       x: 760,
-      y: 16 * TILE - 1,   // feet on ground (offset to avoid boundary stick)
+      y: 16 * TILE + 16,   // Hạ xuống để chân chạm đất
       vx: 90,
       vy: 0,
       w: 26,

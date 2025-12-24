@@ -939,6 +939,8 @@ function moveAndCollideEnemy(e, dt) {
 }
 
 function updateEnemies(dt) {
+  const pr = playerRect();
+
   for (const e of enemies) {
     if (!e.alive) continue;
 
@@ -949,6 +951,23 @@ function updateEnemies(dt) {
     e.anim.flipX = (e.facing < 0);
     e.anim.setAnim(e.invuln > 0 ? "hurt" : "walk");
     e.anim.update(dt);
+
+    // ===== ENEMY GÂY SÁT THƯƠNG KHI CHẠM PLAYER =====
+    const ex = e.x - e.w / 2;
+    const ey = e.y - e.h;
+    if (aabb(pr.l, pr.t, pr.w, pr.h, ex, ey, e.w, e.h)) {
+      // Player đang stomp hoặc rolling -> giết enemy
+      if ((player.stomp && player.vy > 0) || (player.rolling && Math.abs(player.vx) > 100)) {
+        e.alive = false;
+        player.vy = -400; // Bounce lên
+        player.stomp = false;
+        beep(800, 0.08, "triangle", 0.06);
+        game.coins += 2; // Bonus coin khi giết enemy
+      } else if (player.invuln <= 0) {
+        // Enemy đánh player
+        hurtPlayer("enemy");
+      }
+    }
   }
 }
 
@@ -1064,9 +1083,9 @@ function drawMap() {
     ctx.save();
     ctx.imageSmoothingEnabled = false;
 
-    // Ground area: bắt đầu ngay dưới chân nhân vật (y = 15 tiles)
-    const groundY = 15 * TILE;  // Nâng lên 1 tile để khớp với chân character
-    const groundH = 5 * TILE;   // 160 pixels - cao hơn để phủ đến đáy màn hình
+    // Ground area: bắt đầu ngay dưới chân nhân vật
+    const groundY = 15.5 * TILE;  // Điều chỉnh vị trí ground
+    const groundH = 5 * TILE;     // cao để phủ đến đáy màn hình
     const groundW = mapW * TILE; // Full map width
 
     // Draw ground image stretched to fit ground area
@@ -2047,23 +2066,25 @@ function updateTraps(dt) {
       else if (t.state === "retract") t.state = "idle";
     }
 
-    // Logic:
-    // If Idle/Warn/Retract: It is "terrain" (safe).
-    // If Extend: It hurts.
-
-    // We can also make it "solid" when retracted if we want the player to stand on it.
-    // For now, let's just implement the Damage logic when Extended.
+    // ===== SPIKE TRAP LOGIC =====
+    // Khi EXTEND (lòi gai) -> gây sát thương
+    // Khi không EXTEND -> là platform an toàn (đã xử lý trong moveAndCollidePlayer)
 
     if (t.state === "extend") {
-      // Hitbox is slightly smaller
-      const tx = t.x - 12;
-      const ty = t.y - 12; // Lower part only?
-      const tw = 24;
-      const th = 12;
+      // Hitbox cho spike damage - vùng trên trap
+      const trapHitX = t.x - 14;
+      const trapHitY = t.y - 32;  // Từ đỉnh trap
+      const trapHitW = 28;
+      const trapHitH = 32;
 
-      // Full spike height collision
-      if (aabb(pr.l, pr.t, pr.w, pr.h, t.x - 14, t.y - 28, 28, 28)) {
-        hurtPlayer("trap");
+      // Check collision với player
+      if (aabb(pr.l, pr.t, pr.w, pr.h, trapHitX, trapHitY, trapHitW, trapHitH)) {
+        if (player.invuln <= 0) {
+          hurtPlayer("spike");
+          // Đẩy player lên để thoát khỏi spike
+          player.vy = -350;
+          player.y -= 10;
+        }
       }
     }
   }

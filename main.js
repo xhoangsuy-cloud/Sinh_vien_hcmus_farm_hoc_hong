@@ -750,14 +750,12 @@ function moveAndCollidePlayer(dt) {
   player.coyote = player.onGround ? PHYS.coyoteTime : Math.max(0, player.coyote - dt);
   player.jumpBuffer = Math.max(0, player.jumpBuffer - dt);
 
-  // Trap Platform Collision (Safe Traps)
+  // Trap Platform Collision - LUÔN là địa hình (kể cả khi lòi gai)
   if (player.vy >= 0) { // Only checking when falling/standing
     const pw = player.w;
     for (const t of traps) {
-      if (t.state === "extend") continue; // Hazardous, not platform
-      // Trap rect (assuming 32x32, anchors at bottom t.y)
-      // t.x is center X? No, loaded as (tx+0.5)*TILE -> Center X. 
-      // t.y is (ty+1)*TILE -> Bottom Y.
+      // Spike trap LUÔN là platform, không skip khi extend
+      // Trap rect (32x32, center X, bottom Y)
       const tTop = t.y - 32;
       const tLeft = t.x - 16;
       const tRight = t.x + 16;

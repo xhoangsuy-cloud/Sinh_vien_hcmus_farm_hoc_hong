@@ -1,0 +1,152 @@
+{
+  "id": "level1",
+  "name": "Cổng trường → Thư viện (Easy)",
+  "timeLimitSec": 60,
+  "spawn": {
+    "tx": 6,
+    "ty": 12
+  },
+  "goal": {
+    "tx": 76,
+    "ty": 12,
+    "wTiles": 2,
+    "hTiles": 4
+  },
+  "platforms": [
+    {
+      "x0": 10,
+      "x1": 17,
+      "y": 13
+    },
+    {
+      "x0": 24,
+      "x1": 34,
+      "y": 11
+    },
+    {
+      "x0": 40,
+      "x1": 44,
+      "y": 14
+    }
+  ],
+  "stairs": {
+    "x0": 55,
+    "x1": 62,
+    "yTop": 8,
+    "yBottom": 15
+  },
+  "pickups": [
+    {
+      "type": "credit",
+      "tx": 8,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 10,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 12,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 14,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 16,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 18,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 20,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 24,
+      "ty": 10
+    },
+    {
+      "type": "credit",
+      "tx": 27,
+      "ty": 10
+    },
+    {
+      "type": "credit",
+      "tx": 30,
+      "ty": 10
+    },
+    {
+      "type": "credit",
+      "tx": 33,
+      "ty": 10
+    },
+    {
+      "type": "credit",
+      "tx": 40,
+      "ty": 9
+    },
+    {
+      "type": "credit",
+      "tx": 44,
+      "ty": 9
+    },
+    {
+      "type": "credit",
+      "tx": 48,
+      "ty": 9
+    }
+  ],
+  "checkpoints": [
+    {
+      "name": "Hành lang",
+      "tx": 40,
+      "ty": 12
+    }
+  ],
+  "hazards": [
+    {
+      "type": "deadline",
+      "tx": 14,
+      "ty": 15,
+      "minTx": 12,
+      "maxTx": 20,
+      "speed": 140
+    },
+    {
+      "type": "deadline",
+      "tx": 30,
+      "ty": 15,
+      "minTx": 26,
+      "maxTx": 36,
+      "speed": 160
+    },
+    {
+      "type": "deadline",
+      "tx": 46,
+      "ty": 15,
+      "minTx": 42,
+      "maxTx": 54,
+      "speed": 180
+    },
+    {
+      "type": "deadline",
+      "tx": 68,
+      "ty": 15,
+      "minTx": 64,
+      "maxTx": 74,
+      "speed": 200
+    }
+  ],
+  "traps": []
+}

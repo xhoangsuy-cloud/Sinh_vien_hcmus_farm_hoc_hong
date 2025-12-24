@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sonic Cosplay (Canvas)</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      background: #0b0f1a;
+      color: #e8eefc;
+      font-family: system-ui, Arial;
+    }
+
+    #wrap {
+      display: flex;
+      height: 100%;
+    }
+
+    #ui {
+      width: 380px;
+      padding: 12px;
+      box-sizing: border-box;
+      border-right: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(255, 255, 255, .03);
+    }
+
+    #game {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      background: linear-gradient(#233, #111);
+      image-rendering: pixelated;
+      border: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    .row {
+      margin: 10px 0;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      opacity: .9;
+      margin-bottom: 6px;
+    }
+
+    input[type="file"] {
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #2b6;
+      color: #062;
+      font-weight: 700;
+    }
+
+    code {
+      display: block;
+      background: rgba(0, 0, 0, .35);
+      padding: 8px;
+      border-radius: 10px;
+      overflow: auto;
+    }
+
+    .hint {
+      font-size: 12px;
+      opacity: .85;
+      line-height: 1.35;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <div id="ui">
+      <h3 style="margin:6px 0 10px;">Sonic Cosplay</h3>
+      <div class="row hint">
+        <b>Phím:</b> A/D hoặc ←/→ chạy, Space nhảy, S/↓ roll, R reset.
+        <br />
+        <b>Debug:</b> F2 bật/tắt (hitbox, patrol, death plane).
+      </div>
+
+      <div class="row">
+        <label>Chạy bằng VSCode</label>
+        <code>
+Cài extension "Live Server"
+Right click index.html → Open with Live Server
+      </code>
+      </div>
+    </div>
+
+    <div id="game">
+      <canvas id="c" width="960" height="540"></canvas>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>

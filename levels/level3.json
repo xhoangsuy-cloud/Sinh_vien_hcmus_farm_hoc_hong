@@ -1,0 +1,135 @@
+{
+  "id": "level3",
+  "name": "Thư viện địa ngục - BOSS FIGHT",
+  "timeLimitSec": 90,
+  "spawn": {
+    "tx": 4,
+    "ty": 12
+  },
+  "goal": {
+    "tx": 74,
+    "ty": 12,
+    "wTiles": 2,
+    "hTiles": 4
+  },
+  "platforms": [
+    {
+      "x0": 30,
+      "x1": 40,
+      "y": 12
+    },
+    {
+      "x0": 44,
+      "x1": 52,
+      "y": 10
+    }
+  ],
+  "stairs": {
+    "x0": 12,
+    "x1": 18,
+    "yTop": 9,
+    "yBottom": 15
+  },
+  "pickups": [
+    {
+      "type": "credit",
+      "tx": 8,
+      "ty": 13
+    },
+    {
+      "type": "credit",
+      "tx": 12,
+      "ty": 13
+    },
+    {
+      "type": "credit",
+      "tx": 16,
+      "ty": 10
+    },
+    {
+      "type": "credit",
+      "tx": 22,
+      "ty": 7
+    },
+    {
+      "type": "credit",
+      "tx": 26,
+      "ty": 7
+    },
+    {
+      "type": "credit",
+      "tx": 32,
+      "ty": 11
+    },
+    {
+      "type": "credit",
+      "tx": 36,
+      "ty": 11
+    },
+    {
+      "type": "credit",
+      "tx": 40,
+      "ty": 11
+    },
+    {
+      "type": "credit",
+      "tx": 46,
+      "ty": 9
+    },
+    {
+      "type": "credit",
+      "tx": 50,
+      "ty": 9
+    }
+  ],
+  "checkpoints": [
+    {
+      "name": "Trước Boss Arena",
+      "tx": 52,
+      "ty": 10
+    }
+  ],
+  "hazards": [
+    {
+      "type": "deadline",
+      "tx": 10,
+      "ty": 15,
+      "minTx": 6,
+      "maxTx": 16,
+      "speed": 200
+    },
+    {
+      "type": "deadline",
+      "tx": 35,
+      "ty": 15,
+      "minTx": 30,
+      "maxTx": 44,
+      "speed": 220
+    }
+  ],
+  "traps": [
+    {
+      "tx": 24,
+      "ty": 14
+    },
+    {
+      "tx": 42,
+      "ty": 14
+    }
+  ],
+  "boss": {
+    "type": "integral_boss",
+    "tx": 66,
+    "ty": 14,
+    "wTiles": 3,
+    "hTiles": 3,
+    "hp": 12,
+    "triggerTx": 56,
+    "arena": {
+      "x0Tx": 54,
+      "x1Tx": 76,
+      "yFloorTy": 15
+    }
+  },
+  "requireBossDefeat": true
+}

@@ -1,0 +1,127 @@
+{
+  "id": "level4",
+  "name": "Sân trường chiến trường (Boss) - Thi cuối kỳ",
+  "timeLimitSec": 60,
+  "spawn": {
+    "tx": 6,
+    "ty": 12
+  },
+  "goal": {
+    "tx": 78,
+    "ty": 12,
+    "wTiles": 2,
+    "hTiles": 4
+  },
+  "pickups": [
+    {
+      "type": "credit",
+      "tx": 10,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 12,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 14,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 16,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 18,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 20,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 22,
+      "ty": 12
+    },
+    {
+      "type": "credit",
+      "tx": 24,
+      "ty": 12
+    },
+    {
+      "type": "wifi",
+      "tx": 18,
+      "ty": 11
+    },
+    {
+      "type": "coffee",
+      "tx": 40,
+      "ty": 12
+    },
+    {
+      "type": "book",
+      "tx": 52,
+      "ty": 12
+    },
+    {
+      "type": "card",
+      "tx": 60,
+      "ty": 12
+    },
+    {
+      "type": "drl",
+      "tx": 74,
+      "ty": 12
+    }
+  ],
+  "checkpoints": [
+    {
+      "name": "Sân trường",
+      "tx": 24,
+      "ty": 12
+    },
+    {
+      "name": "Cổng thi",
+      "tx": 54,
+      "ty": 12
+    }
+  ],
+  "hazards": [
+    {
+      "type": "deadline",
+      "tx": 26,
+      "ty": 15,
+      "minTx": 22,
+      "maxTx": 34,
+      "speed": 220
+    },
+    {
+      "type": "deadline",
+      "tx": 44,
+      "ty": 15,
+      "minTx": 38,
+      "maxTx": 54,
+      "speed": 240
+    }
+  ],
+  "boss": {
+    "type": "final_exam",
+    "tx": 66,
+    "ty": 13,
+    "wTiles": 3,
+    "hTiles": 2,
+    "hp": 18,
+    "triggerTx": 54,
+    "arena": {
+      "x0Tx": 56,
+      "x1Tx": 76,
+      "yFloorTy": 15
+    }
+  },
+  "requireBossDefeat": true
+}

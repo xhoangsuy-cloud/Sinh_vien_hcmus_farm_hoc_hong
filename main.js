@@ -19,9 +19,9 @@ let coinImg = null; // New coin sprite
 let endingImg = null; // Ending screen
 
 
-
 // Ground tileset (hell)
 let tileImg = null;
+let groundImg = null; // New ground image
 
 // UI icons
 let uiIcons = null;
@@ -51,7 +51,8 @@ const ASSETS = {
   trap: { png: "./newassets/spike trap (1).png", json: "./newassets/spike.sprite.json" },
   boss: { png: "./newassets/intergral boss.png", json: "./newassets/boss.sprite.json" },
   coin: { png: "./newassets/coin.png", json: "./newassets/coin.sprite.json" },
-  ending: { png: "./newassets/ending.png" }
+  ending: { png: "./newassets/ending.png" },
+  ground: { png: "./newassets/ground.png" }
 };
 
 // Placeholder config for new Player Sprite (needs adjustment based on actual sheet)
@@ -506,6 +507,17 @@ async function loadOtherAssets() {
     }
   } catch (e) {
     console.warn("[COIN] Failed to load config:", e);
+  }
+
+  // Ground - Load new ground image
+  try {
+    const groundRes = await loadAsset(ASSETS.ground.png, null);
+    if (groundRes.img) {
+      groundImg = groundRes.img;
+      console.log("[GROUND] Loaded successfully!");
+    }
+  } catch (e) {
+    console.warn("[GROUND] Failed to load:", e);
   }
 }
 
@@ -1047,7 +1059,37 @@ function getHellTileSrc(x, y) {
 }
 
 function drawMap() {
-  // Ground is part of background - no tile rendering needed
+  // ===== RENDER GROUND IMAGE =====
+  if (groundImg) {
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+
+    // Ground area: y = 16 * TILE to mapH * TILE (4 tiles tall)
+    const groundY = 16 * TILE;
+    const groundH = 4 * TILE; // 128 pixels
+    const groundW = mapW * TILE; // Full map width
+
+    // Draw ground image stretched to fit ground area
+    // Tile horizontally if image is smaller than map
+    const imgW = groundImg.width;
+    const imgH = groundImg.height;
+
+    // Calculate how many times to tile
+    let x = -cam.x;
+    const y = groundY - cam.y;
+
+    // Scale to fit ground height
+    const scale = groundH / imgH;
+    const scaledW = imgW * scale;
+
+    // Draw tiled ground
+    while (x < canvas.width) {
+      ctx.drawImage(groundImg, x, y, scaledW, groundH);
+      x += scaledW;
+    }
+
+    ctx.restore();
+  }
 
   // Visual overlays for special obstacles
   drawVietnamStairs();
